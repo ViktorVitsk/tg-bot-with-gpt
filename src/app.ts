@@ -21,6 +21,9 @@ class Bot {
       command.handle();
     }
     this.bot.launch();
+
+    process.once('SIGINT', () => this.bot.stop('SIGINT'));
+    process.once('SIGTERM', () => this.bot.stop('SIGTERM'));
   }
 }
 
