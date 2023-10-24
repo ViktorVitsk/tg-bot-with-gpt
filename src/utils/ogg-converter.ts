@@ -35,7 +35,7 @@ class OggConverter {
     try {
       const oggPath = resolve(
         __dirname,
-        '../../../data/voices',
+        '../../data/voices',
         `${filename}.ogg`
       );
       const response = await axios({

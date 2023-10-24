@@ -2,7 +2,7 @@ import { Telegraf } from 'telegraf';
 import { Command } from './command.class';
 import { message } from 'telegraf/filters';
 import { IBotContext } from '../context/context.interface';
-import { ogg } from './utils/ogg-converter';
+import { ogg } from '../utils/ogg-converter';
 
 export class VoiceCommand extends Command {
   constructor(bot: Telegraf<IBotContext>) {
