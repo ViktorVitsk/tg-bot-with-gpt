@@ -28,5 +28,5 @@ class Bot {
   }
 }
 
-const bot = new Bot(new ConfigService());
+const bot = new Bot(ConfigService.getInstance());
 bot.init();

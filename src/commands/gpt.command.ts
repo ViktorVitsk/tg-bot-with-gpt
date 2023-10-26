@@ -10,8 +10,8 @@ export class GPTCommand extends Command {
   }
   handle(): void {
     this.bot.on(message('voice'), async ctx => {
-      const mp3 = await voiceToText(ctx);
-      ctx.reply(mp3);
+      const text = await voiceToText(ctx);
+      ctx.reply(text);
     });
   }
 }
