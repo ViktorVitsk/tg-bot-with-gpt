@@ -10,7 +10,7 @@ class OggConverter {
     ffmpeg.setFfmpegPath(installer.path);
   }
 
-  async toMp3(input: string, output: string): Promise<string | undefined> {
+  async toMp3(input: string, output: string): Promise<string> {
     try {
       const outputPath = resolve(dirname(input), `${output}.mp3`);
       return new Promise((resolve, reject) => {
@@ -29,9 +29,10 @@ class OggConverter {
         console.log(`Error while creating mp3 ${error.message}`);
       }
     }
+    return '';
   }
 
-  async create(url: string, filename: string): Promise<string | null> {
+  async create(url: string, filename: string): Promise<string> {
     try {
       const oggPath = resolve(
         __dirname,
@@ -53,7 +54,7 @@ class OggConverter {
         console.log(`Error while creating ogg ${error.message}`);
       }
     }
-    return null;
+    return '';
   }
 }
 
