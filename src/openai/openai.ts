@@ -3,6 +3,10 @@ import { IConfigService } from '../config/config.interface';
 import { ConfigService } from '../config/config.service';
 import { createReadStream } from 'fs';
 import { ChatCompletionMessageParam } from 'openai/resources';
+import { NarrowedContext } from 'telegraf';
+import { Update, Message } from 'telegraf/typings/core/types/typegram';
+import { IBotContext } from '../context/context.interface';
+import { ogg } from '../utils/ogg-converter';
 
 class GPT {
   openai: OpenAI;
@@ -34,6 +38,28 @@ class GPT {
     } catch (error) {
       if (error instanceof Error) {
         console.log(`Error while transcription ${error.message}`);
+      }
+    }
+    return '';
+  }
+
+  async voiceToText(
+    ctx: NarrowedContext<
+      IBotContext,
+      Update.MessageUpdate<Record<'voice', unknown> & Message.VoiceMessage>
+    >
+  ) {
+    try {
+      const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id);
+      const userId = String(ctx.message.from.id);
+      const oggPath = await ogg.create(link.href, userId);
+
+      const mp3Path = await ogg.toMp3(oggPath, userId);
+      const text = await this.transcription(mp3Path);
+      return text;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(`Error while voice message ${error.message}`);
       }
     }
     return '';

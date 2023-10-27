@@ -2,7 +2,6 @@ import { Telegraf } from 'telegraf';
 import { Command } from './command.class';
 import { IBotContext } from '../context/context.interface';
 import { message } from 'telegraf/filters';
-import { voiceToText } from '../utils/voice-to-text';
 import { openai } from '../openai/openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
 
@@ -14,7 +13,7 @@ export class GPTCommand extends Command {
     this.bot.command('gpt', async ctx => {
       ctx.reply('Шо?');
       this.bot.on(message('voice'), async ctx => {
-        const text = await voiceToText(ctx);
+        const text = await openai.voiceToText(ctx);
         if (text.trim().length > 0) {
           await ctx.replyWithHTML(`<b>Ваш вопрос:</b>
 					<i>${text}</i>`);
