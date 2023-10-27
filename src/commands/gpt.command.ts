@@ -12,22 +12,31 @@ export class GPTCommand extends Command {
   handle(): void {
     this.bot.command('gpt', async ctx => {
       ctx.reply('Шо?');
-      this.bot.on(message('voice'), async ctx => {
-        const text = await openai.voiceToText(ctx);
-        if (text.trim().length > 0) {
-          await ctx.replyWithHTML(`<b>Ваш вопрос:</b>
-					<i>${text}</i>`);
-          const messages: ChatCompletionMessageParam[] = [
-            { content: text, role: 'user' },
-          ];
-          const response = await openai.chat(messages);
-          if (typeof response?.content === 'string') {
-            await ctx.reply(response?.content);
-          }
-        } else {
-          ctx.reply('Шото дядя, ты хуйню сказал');
+      this.voice();
+    });
+  }
+
+  private voice() {
+    this.bot.on(message('voice'), async ctx => {
+      const text = await openai.voiceToText(ctx);
+
+      if (text.trim().length > 0) {
+        await ctx.replyWithHTML(`<b>Ваш вопрос:</b>
+					<i>${text}</i>
+          <b>Ответ:</b>`);
+
+        const messages: ChatCompletionMessageParam[] = [
+          { content: text, role: 'user' },
+        ];
+
+        const response = await openai.chat(messages);
+
+        if (typeof response?.content === 'string') {
+          await ctx.reply(response?.content);
         }
-      });
+      } else {
+        ctx.reply('Шото дядя, ты хуйню сказал');
+      }
     });
   }
 }
