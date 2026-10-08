@@ -9,7 +9,7 @@ export class StartCommand extends Command {
 
   handle(): void {
     this.bot.command('start', async ctx => {
-      await ctx.reply(JSON.stringify(ctx.message, null, 2));
+      await ctx.reply('Привет! Используйте /gpt, затем отправьте голосовое сообщение.');
     });
   }
 }
