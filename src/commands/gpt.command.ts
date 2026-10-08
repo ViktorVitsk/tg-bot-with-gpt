@@ -11,7 +11,7 @@ export class GPTCommand extends Command {
   }
   handle(): void {
     this.bot.command('gpt', async ctx => {
-      ctx.reply('Шо?');
+      ctx.reply('Отправьте голосовое сообщение — я попробую распознать его и ответить.');
       this.voice();
     });
   }
@@ -35,7 +35,7 @@ export class GPTCommand extends Command {
           await ctx.reply(response?.content);
         }
       } else {
-        ctx.reply('Шото дядя, ты хуйню сказал');
+        ctx.reply('Не удалось распознать голосовое сообщение. Попробуйте ещё раз.');
       }
     });
   }
